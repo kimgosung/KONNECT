@@ -13,6 +13,24 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+const gMarketSansLight = localFont({
+  src: "../../public/fonts/GmarketSansLight.otf",
+  variable: "--font-gMarketSans-light",
+  weight: "300",
+})
+
+const gMarketSansMedium = localFont({
+  src: "../../public/fonts/GmarketSansMedium.otf",
+  variable: "--font-gMarketSans-medium",
+  weight: "500",
+})
+
+const gMarketSansBold = localFont({
+  src: "../../public/fonts/GmarketSansBold.otf",
+  variable: "--font-gMarketSans-bold",
+  weight: "700",
+})
+
 export const metadata: Metadata = {
   title: "KONNECT",
   description: "Konkuk Univ Computer Engineering Conference",
@@ -29,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${gMarketSansLight.variable} ${gMarketSansMedium.variable} ${gMarketSansBold.variable} antialiased`}
       >
         {children}
       </body>

@@ -1,6 +1,6 @@
 'use client';
 
-import { createRef, RefObject, useState } from 'react';
+import React, { createRef, RefObject, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown } from 'react-icons/fa';
@@ -19,12 +19,23 @@ export default function Home() {
         if (nextPage !== currentPage) {
             setCurrentPage(nextPage);
             setIsScrolling(true);
-            setTimeout(() => setIsScrolling(false), 2000);
+            setTimeout(() => setIsScrolling(false), 2100);
         }
     };
 
     return (
         <div className="h-screen bg-black overflow-hidden relative" onWheel={handleScroll}>
+            <div className="absolute right-10 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3">
+                {[0, 1, 2, 3].map((index) => (
+                    <motion.div
+                        key={index}
+                        className={`w-2 h-2 rounded-full ${index === currentPage ? 'bg-gray-200 scale-125' : 'bg-gray-500'}`}
+                        animate={{ opacity: index === currentPage ? 1 : 0.5 }}
+                        transition={{ duration: 0.3 }}
+                    />
+                ))}
+            </div>
+
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentPage}
@@ -34,50 +45,26 @@ export default function Home() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.6, ease: 'easeInOut' }}
                 >
-                    {/* 첫 번째 페이지 */}
                     {currentPage === 0 && (
-                        <div ref={pageRefs[0]} className="relative h-screen bg-black flex flex-col items-center justify-center text-white space-y-8 overflow-hidden">
-                            {/* 부드러운 확대 및 이동이 포함된 배경 이미지 */}
-                            <motion.div
-                                className="absolute top-0 right-0 w-full h-full z-0"
-                                initial={{ scale: 1 }}
-                                animate={{ scale: 1.2, y: 50 }}
-                                transition={{ duration: 50, ease: 'easeInOut' }}
-                                style={{
-                                    backgroundImage: `url('/images/background_image.png')`,
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    filter: 'blur(6px) brightness(0.5)',
-                                }}
-                            />
-
-                            {/* 로고 애니메이션 */}
+                        <div ref={pageRefs[0]}
+                             className="relative h-screen bg-black flex flex-col items-center justify-center text-white overflow-hidden">
+                            <div className="absolute top-0 right-0 bottom-0 w-full h-full z-0">
+                                <video
+                                    src={'/videos/background_video.mov'}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    className="w-full h-full object-cover fixed"
+                                />
+                            </div>
                             <motion.div
                                 className="z-10 drop-shadow-lg"
                                 initial={{ opacity: 0, scale: 0.85 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1.2, ease: 'easeOut' }}
                             >
-                                <Image src="/images/Logo.png" alt="logo" width={380} height={380} />
+                                <Image src="/images/Logo.png" alt="logo" width={450} height={380} />
                             </motion.div>
-
-                            {/* 동아리 소개 텍스트 애니메이션 */}
-                            <motion.div
-                                className="z-10 text-center text-2xl font-light tracking-wide"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 1, duration: 1.6, ease: 'easeOut' }}
-                            >
-                                <p className="text-lg font-semibold p-2 tracking-widest text-gray-100 shadow-lg">
-                                    건국대학교 컴퓨터공학부 IT 컨퍼런스 및 네트워킹 동아리
-                                </p>
-                                <p className="mt-4 text-sm max-w-lg mx-auto text-gray-300 opacity-90 tracking-wide">
-                                    최신 기술을 학습하고 네트워킹 기회를 제공하는 저희 동아리와 함께 성장하세요.
-                                </p>
-                            </motion.div>
-
-                            {/* 스크롤 화살표 애니메이션 */}
                             <motion.div
                                 className="absolute bottom-16 z-10 text-3xl text-gray-300 cursor-pointer"
                                 onClick={() => setCurrentPage(1)}
@@ -94,24 +81,61 @@ export default function Home() {
                         </div>
                     )}
 
-                    {/* 두 번째 페이지 */}
                     {currentPage === 1 && (
-                        <div ref={pageRefs[1]} className="h-screen bg-black flex items-center justify-center text-white text-4xl font-bold">
-                            Discover More Features
+                        <div ref={pageRefs[1]}
+                             className="h-screen bg-black flex flex-col items-center justify-center text-white">
+                            <motion.h1
+                                className="font-gMarketSansBold text-5xl mb-8"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, ease: 'easeOut' }}
+                            >
+                                KONNECT, 건국을 연결하다.
+                            </motion.h1>
                         </div>
                     )}
 
-                    {/* 세 번째 페이지 */}
                     {currentPage === 2 && (
-                        <div ref={pageRefs[2]} className="h-screen bg-black flex items-center justify-center text-white text-4xl font-bold">
-                            Join Our Community
+                        <div ref={pageRefs[2]}
+                             className="h-screen bg-black flex flex-col items-center justify-center text-white">
+                            <motion.h1
+                                className="font-gMarketSansBold text-5xl mb-8"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, ease: 'easeOut' }}
+                            >
+                                2024년 12월 4일
+                            </motion.h1>
+                            <motion.p
+                                className="text-lg text-gray-300 text-center px-8 md:px-20 max-w-3xl"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
+                            >
+                                KONNECT가 공식적으로 오픈됩니다. 다양한 이벤트와 소통의 장이 마련된 KONNECT에서 여러분을 기다립니다.
+                            </motion.p>
                         </div>
                     )}
 
-                    {/* 네 번째 페이지 */}
                     {currentPage === 3 && (
-                        <div ref={pageRefs[3]} className="h-screen bg-black flex items-center justify-center text-white text-4xl font-bold">
-                            Start Your Journey
+                        <div ref={pageRefs[3]}
+                             className="h-screen bg-black flex flex-col items-center justify-center text-white">
+                            <motion.h1
+                                className="font-gMarketSansBold text-5xl mb-8"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, ease: 'easeOut' }}
+                            >
+                                KONNECT가 시작됩니다.
+                            </motion.h1>
+                            <motion.p
+                                className="text-lg text-gray-300 text-center px-8 md:px-20 max-w-3xl"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
+                            >
+                                여러분과 함께할 KONNECT, 2024년 12월 4일부터 새로운 연결을 시작하세요.
+                            </motion.p>
                         </div>
                     )}
                 </motion.div>

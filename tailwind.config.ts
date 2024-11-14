@@ -12,6 +12,11 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        gMarketSansLight: ["var(--font-gMarketSans-light)"],
+        gMarketSansMedium: ["var(--font-gMarketSans-medium)"],
+        gMarketSansBold: ["var(--font-gMarketSans-bold)"],
+      }
     },
   },
   plugins: [],
